@@ -15,6 +15,7 @@ class PokemonCard extends Component {
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalCenterTitle">
+                {/* should take the evolution name     */}
                 shsoui
               </h5>
               <button
@@ -23,12 +24,15 @@ class PokemonCard extends Component {
                 data-dismiss="modal"
                 aria-label="Close"
               >
+                {/*
+                  shuld take the images of evolution  */}
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div className="modal-body">...</div>
             <div className="modal-footer">
               <button type="button" className="" data-dismiss="modal">
+                {/* to close the open card  */}
                 Close
               </button>
             </div>
