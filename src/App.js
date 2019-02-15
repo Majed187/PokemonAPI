@@ -1,25 +1,51 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import PokemonCard from "./components/PokemonCard";
 
 class App extends Component {
+  state = {
+    data: [],
+    isClicked: false
+  };
+  async componentDidMount() {
+    await fetch("https://pokeapi.co/api/v2/pokemon/?limit=29")
+      .then(data => data.json())
+      .then(res => {
+        console.log(res);
+        this.setState({
+          data: res.results
+        });
+      });
+  }
+
+  getData = async e => {
+    let id = e.target.id;
+    await fetch(`https://pokeapi.co/api/v2/pokemon-species/${id}`)
+      .then(data => data.json())
+      .then(res => {
+        console.log(res);
+        return res.results.map(url =>
+          fetch(url.url)
+            .then(pokemon => pokemon.json())
+            .then(res => console.log(res))
+        );
+      });
+  };
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="container list ">
+        <h1 className="text-center display-3">Pokemon List </h1>
+        {this.state.data.map((pokemon, i) => (
+          <button
+            type="button"
+            onClick={this.getData}
+            key={i}
+            className=" m-2 "
           >
-            Learn React
-          </a>
-        </header>
+            {pokemon.name}
+          </button>
+        ))}
+        <PokemonCard />
       </div>
     );
   }
